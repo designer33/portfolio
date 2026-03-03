@@ -1,14 +1,15 @@
 {
     "name": "portfolio-monorepo",
     "version": "1.0.0",
+    "private": true,
     "scripts": {
-        "build": "npm install && npm run build --workspace=client"
+        "build": "npm run build --workspace=client"
     },
     "workspaces": [
         "client",
         "server"
     ],
-    "dependencies": {
+    "devDependencies": {
         "vite": "^7.3.1"
     }
 }
