@@ -2,7 +2,13 @@
     "name": "portfolio-monorepo",
     "version": "1.0.0",
     "scripts": {
-        "build": "npm install --prefix client && npm run build --prefix client"
+        "build": "npm install --prefix client && cd client && vite build"
     },
-    "dependencies": {}
+    "workspaces": [
+        "client",
+        "server"
+    ],
+    "dependencies": {
+        "vite": "^7.3.1"
+    }
 }
