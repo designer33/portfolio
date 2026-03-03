@@ -47,8 +47,9 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-slate-400 text-sm">
-                    &copy; {new Date().getFullYear()} Irfan Rashid. {t('footer.rights')}
+                <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-slate-400 text-sm flex flex-col items-center gap-2">
+                    <p>&copy; {new Date().getFullYear()} Irfan Rashid. {t('footer.rights')}</p>
+                    <p className="text-[10px] opacity-30 uppercase tracking-[0.2em]">v1.1 - Multilingual</p>
                 </div>
             </div>
         </footer>
