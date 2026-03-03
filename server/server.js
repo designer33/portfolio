@@ -23,13 +23,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || origin.startsWith('http://localhost') || origin === process.env.CLIENT_URL) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true, // Allow all origins during initial deployment testing
   credentials: true,
 }));
 

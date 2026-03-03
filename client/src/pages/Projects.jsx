@@ -20,7 +20,8 @@ const Projects = () => {
                 setError(null);
             } catch (err) {
                 console.error("Error fetching projects:", err);
-                setError("Failed to load projects. Please try again later.");
+                const msg = err.response?.data?.message || err.message || "Failed to load projects.";
+                setError(`${msg} (Status: ${err.response?.status || 'Network Error'})`);
             } finally {
                 setLoading(false);
             }
