@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Tag, ArrowRight, Loader, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../utils/api';
 
 const tagColors = {
@@ -10,6 +11,7 @@ const tagColors = {
 };
 
 const BlogSection = () => {
+    const { t } = useTranslation();
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -19,18 +21,19 @@ const BlogSection = () => {
             try {
                 setLoading(true);
                 const { data } = await api.get('/blog');
-                setPosts(data);
+                setPosts(Array.isArray(data) ? data : []);
                 setError(null);
             } catch (err) {
                 console.error("Error fetching blog posts:", err);
-                setError("Failed to load blog posts.");
+                setError(t('blog.failed'));
             } finally {
                 setLoading(false);
             }
         };
 
         fetchPosts();
-    }, []);
+    }, [t]);
+
     return (
         <section id="blog" className="py-20 bg-slate-50 dark:bg-slate-900/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,17 +44,17 @@ const BlogSection = () => {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-bold mb-4"
                     >
-                        Latest <span className="text-gradient">Articles</span>
+                        {t('blog.title')} <span className="text-gradient">{t('blog.subtitle')}</span>
                     </motion.h2>
                     <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                        Thoughts on web development, design systems, and industry lessons after 13+ years in the field.
+                        {t('blog.description')}
                     </p>
                 </div>
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20">
                         <Loader size={40} className="animate-spin text-primary mb-4" />
-                        <p className="text-slate-500 animate-pulse">Loading articles...</p>
+                        <p className="text-slate-500 animate-pulse">{t('blog.loading')}</p>
                     </div>
                 ) : error ? (
                     <div className="flex flex-col items-center justify-center py-20 glass rounded-2xl border-red-100 dark:border-red-900/30">
@@ -60,7 +63,7 @@ const BlogSection = () => {
                     </div>
                 ) : posts.length === 0 ? (
                     <div className="text-center py-20 glass rounded-2xl">
-                        <p className="text-slate-500">No articles published yet.</p>
+                        <p className="text-slate-500">{t('blog.no_posts')}</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -94,7 +97,7 @@ const BlogSection = () => {
                                                 <span className="flex items-center gap-1"><Tag size={10} />{postTag}</span>
                                             </span>
                                             <span className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
-                                                <Clock size={12} /> {readTime} min read
+                                                <Clock size={12} /> {readTime} {t('blog.min_read')}
                                             </span>
                                         </div>
 
@@ -110,7 +113,7 @@ const BlogSection = () => {
                                                 <Calendar size={12} /> {new Date(post.createdAt).toLocaleDateString()}
                                             </span>
                                             <a href={`/blog/${post.slug}`} className="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-dark transition-colors group/link">
-                                                Read More
+                                                {t('blog.read_more')}
                                                 <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
                                             </a>
                                         </div>

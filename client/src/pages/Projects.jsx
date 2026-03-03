@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, Loader, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../utils/api';
 
-const categories = ['All', 'WordPress', 'Shopify', 'Angular', 'UI/UX Design', 'Frontend Projects'];
-
 const Projects = () => {
+    const { t } = useTranslation();
+    const categories = ['All', 'WordPress', 'Shopify', 'Angular', 'UI/UX Design', 'Frontend Projects'];
+
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -16,11 +18,11 @@ const Projects = () => {
             try {
                 setLoading(true);
                 const { data } = await api.get('/projects');
-                setProjects(data);
+                setProjects(Array.isArray(data) ? data : []);
                 setError(null);
             } catch (err) {
                 console.error("Error fetching projects:", err);
-                const msg = err.response?.data?.message || err.message || "Failed to load projects.";
+                const msg = err.response?.data?.message || err.message || t('projects.failed');
                 setError(`${msg} (Status: ${err.response?.status || 'Network Error'})`);
             } finally {
                 setLoading(false);
@@ -28,7 +30,7 @@ const Projects = () => {
         };
 
         fetchProjects();
-    }, []);
+    }, [t]);
 
     const filteredProjects = activeCategory === 'All'
         ? projects
@@ -42,10 +44,10 @@ const Projects = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-4xl md:text-5xl font-bold mb-4"
                 >
-                    My <span className="text-gradient">Portfolio</span>
+                    {t('projects.title')} <span className="text-gradient">{t('projects.subtitle')}</span>
                 </motion.h1>
                 <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                    A selection of my recent works. These projects demonstrate my expertise in building robust, performant web applications.
+                    {t('projects.description')}
                 </p>
             </div>
 
@@ -73,7 +75,7 @@ const Projects = () => {
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-20">
                     <Loader size={40} className="animate-spin text-primary mb-4" />
-                    <p className="text-slate-500 animate-pulse">Loading projects...</p>
+                    <p className="text-slate-500 animate-pulse">{t('projects.loading')}</p>
                 </div>
             ) : error ? (
                 <div className="flex flex-col items-center justify-center py-20 glass rounded-2xl border-red-100 dark:border-red-900/30">
@@ -83,18 +85,18 @@ const Projects = () => {
                         onClick={() => window.location.reload()}
                         className="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors"
                     >
-                        Try Again
+                        {t('projects.try_again')}
                     </button>
                 </div>
             ) : filteredProjects.length === 0 ? (
                 <div className="text-center py-20 glass rounded-2xl">
-                    <p className="text-slate-500">No projects found in this category.</p>
+                    <p className="text-slate-500">{t('projects.no_projects')}</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredProjects.map((project, index) => (
                         <motion.div
-                            key={project._id}
+                            key={project._id || index}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.3, delay: index * 0.1 }}

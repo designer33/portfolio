@@ -1,8 +1,19 @@
 import React from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+    const { t } = useTranslation();
     const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+    const navLinks = [
+        { id: 'home', label: t('nav.home') },
+        { id: 'about', label: t('nav.about') },
+        { id: 'skills', label: t('nav.services') },
+        { id: 'projects', label: t('nav.portfolio') },
+        { id: 'blog', label: t('nav.blog') },
+        { id: 'contact', label: t('nav.contact') },
+    ];
 
     return (
         <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-12 transition-colors duration-300">
@@ -12,13 +23,13 @@ const Footer = () => {
                         <h2 className="text-2xl font-bold tracking-tight mb-1">
                             <span className="text-gradient">IRFAN</span> RASHID
                         </h2>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm">Senior Frontend Developer & UI/UX Designer</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm">{t('footer.desc')}</p>
                     </div>
 
                     <div className="flex flex-wrap justify-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-                        {['home', 'about', 'skills', 'projects', 'blog', 'contact'].map((id) => (
-                            <button key={id} onClick={() => scrollTo(id)} className="hover:text-primary capitalize transition-colors cursor-pointer">
-                                {id === 'skills' ? 'Services' : id === 'projects' ? 'Portfolio' : id.charAt(0).toUpperCase() + id.slice(1)}
+                        {navLinks.map((link) => (
+                            <button key={link.id} onClick={() => scrollTo(link.id)} className="hover:text-primary transition-colors cursor-pointer">
+                                {link.label}
                             </button>
                         ))}
                     </div>
@@ -37,7 +48,7 @@ const Footer = () => {
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-slate-400 text-sm">
-                    &copy; {new Date().getFullYear()} Irfan Rashid. All rights reserved. Built with React & Node.js.
+                    &copy; {new Date().getFullYear()} Irfan Rashid. {t('footer.rights')}
                 </div>
             </div>
         </footer>

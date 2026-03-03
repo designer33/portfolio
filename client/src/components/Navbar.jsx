@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { Sun, Moon, Menu, X } from 'lucide-react';
+import { Sun, Moon, Menu, X, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
     const { theme, toggleTheme } = useTheme();
+    const { t, i18n } = useTranslation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleLanguage = () => {
+        const newLang = i18n.language === 'en' ? 'it' : 'en';
+        i18n.changeLanguage(newLang);
+    };
 
     const scrollToSection = (e, targetId) => {
         e.preventDefault();
@@ -16,12 +23,12 @@ const Navbar = () => {
     };
 
     const navLinks = [
-        { name: 'Home', id: 'home' },
-        { name: 'About Me', id: 'about' },
-        { name: 'My Services', id: 'skills' },
-        { name: 'Portfolio', id: 'projects' },
-        { name: 'Blog', id: 'blog' },
-        { name: 'Contact', id: 'contact' },
+        { name: t('nav.home'), id: 'home' },
+        { name: t('nav.about'), id: 'about' },
+        { name: t('nav.services'), id: 'skills' },
+        { name: t('nav.portfolio'), id: 'projects' },
+        { name: t('nav.blog'), id: 'blog' },
+        { name: t('nav.contact'), id: 'contact' },
     ];
 
     return (
@@ -44,13 +51,20 @@ const Navbar = () => {
                                 {link.name}
                             </a>
                         ))}
+                        <button onClick={toggleLanguage} className="p-2 flex items-center gap-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-sm font-medium">
+                            <Globe size={18} />
+                            <span className="uppercase">{i18n.language}</span>
+                        </button>
                         <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
                             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center space-x-4">
+                    <div className="md:hidden flex items-center space-x-2">
+                        <button onClick={toggleLanguage} className="p-2 flex items-center gap-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-xs font-bold uppercase">
+                            <Globe size={16} /> {i18n.language}
+                        </button>
                         <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
                             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>

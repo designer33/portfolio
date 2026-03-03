@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, Code2, PenTool, LayoutTemplate } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const AboutSection = () => {
+    const { t } = useTranslation();
     const skills = [
-        { title: "Frontend Development", icon: <Code2 size={24} />, desc: "React, Next.js, Angular, Vue" },
-        { title: "UI/UX Design", icon: <PenTool size={24} />, desc: "Figma, Adobe XD, Wireframing" },
-        { title: "CMS Development", icon: <LayoutTemplate size={24} />, desc: "WordPress, Shopify, WooCommerce" },
+        { title: t('about.skill1_title'), icon: <Code2 size={24} />, desc: t('about.skill1_desc') },
+        { title: t('about.skill2_title'), icon: <PenTool size={24} />, desc: t('about.skill2_desc') },
+        { title: t('about.skill3_title'), icon: <LayoutTemplate size={24} />, desc: t('about.skill3_desc') },
     ];
 
     return (
@@ -19,10 +21,10 @@ const AboutSection = () => {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-bold mb-4"
                     >
-                        About <span className="text-gradient">Me</span>
+                        {t('about.title')} <span className="text-gradient">{t('about.subtitle')}</span>
                     </motion.h2>
                     <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                        My professional journey, philosophy, and the skills I bring to the table.
+                        {t('about.p1')}
                     </p>
                 </div>
 
@@ -33,15 +35,15 @@ const AboutSection = () => {
                         viewport={{ once: true }}
                         className="space-y-6"
                     >
-                        <h3 className="text-2xl font-semibold">Crafting digital experiences for over a decade.</h3>
+                        <h3 className="text-2xl font-semibold">{t('about.h3')}</h3>
                         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            With 13+ years of experience in web development and UI/UX design, I have successfully delivered high-performance, scalable, and visually appealing web applications. My expertise spans across modern JavaScript frameworks, responsive design, and robust content management systems.
+                            {t('about.p2')}
                         </p>
                         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            I believe in writing clean, maintainable code and designing intuitive user interfaces that bridge the gap between complex functionality and user accessibility.
+                            {t('about.p3')}
                         </p>
                         <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg transition-colors duration-300">
-                            <Download size={18} className="mr-2" /> Download CV
+                            <Download size={18} className="mr-2" /> {t('about.download_cv')}
                         </a>
                     </motion.div>
 

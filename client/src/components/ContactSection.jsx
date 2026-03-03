@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../utils/api';
 
 const ContactSection = () => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
     const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error'
 
@@ -29,10 +31,10 @@ const ContactSection = () => {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-bold mb-4"
                     >
-                        Get in <span className="text-gradient">Touch</span>
+                        {t('contact.title')} <span className="text-gradient">{t('contact.subtitle')}</span>
                     </motion.h2>
                     <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                        Have a project in mind or just want to say hi? Feel free to reach out.
+                        {t('contact.description')}
                     </p>
                 </div>
 
@@ -49,9 +51,9 @@ const ContactSection = () => {
                                 <Mail size={24} />
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold mb-1">Email Me</h3>
+                                <h3 className="text-lg font-bold mb-1">{t('contact.email_me')}</h3>
                                 <p className="text-slate-600 dark:text-slate-400 mb-2">info@irfanrashid.com</p>
-                                <a href="mailto:info@irfanrashid.com" className="text-primary hover:underline text-sm font-medium">Send Email</a>
+                                <a href="mailto:info@irfanrashid.com" className="text-primary hover:underline text-sm font-medium">{t('contact.send_email')}</a>
                             </div>
                         </div>
 
@@ -60,9 +62,9 @@ const ContactSection = () => {
                                 <Phone size={24} />
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold mb-1">Call Me</h3>
+                                <h3 className="text-lg font-bold mb-1">{t('contact.call_me')}</h3>
                                 <p className="text-slate-600 dark:text-slate-400 mb-2">+92 343 848 5818</p>
-                                <a href="tel:+923438485818" className="text-primary hover:underline text-sm font-medium">Place Call</a>
+                                <a href="tel:+923438485818" className="text-primary hover:underline text-sm font-medium">{t('contact.place_call')}</a>
                             </div>
                         </div>
 
@@ -71,7 +73,7 @@ const ContactSection = () => {
                                 <MapPin size={24} />
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold mb-1">Location</h3>
+                                <h3 className="text-lg font-bold mb-1">{t('contact.location')}</h3>
                                 <p className="text-slate-600 dark:text-slate-400">Rawalpindi, Pakistan</p>
                             </div>
                         </div>
@@ -87,23 +89,23 @@ const ContactSection = () => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Your Name</label>
+                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t('contact.name_label')}</label>
                                     <input
                                         type="text"
                                         required
                                         className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                                        placeholder="John Doe"
+                                        placeholder={t('contact.name_placeholder')}
                                         value={formData.name}
                                         onChange={e => setFormData({ ...formData, name: e.target.value })}
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Your Email</label>
+                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t('contact.email_label')}</label>
                                     <input
                                         type="email"
                                         required
                                         className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                                        placeholder="john@example.com"
+                                        placeholder={t('contact.email_placeholder')}
                                         value={formData.email}
                                         onChange={e => setFormData({ ...formData, email: e.target.value })}
                                     />
@@ -111,24 +113,24 @@ const ContactSection = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Subject</label>
+                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t('contact.subject_label')}</label>
                                 <input
                                     type="text"
                                     required
                                     className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                                    placeholder="Project Inquiry"
+                                    placeholder={t('contact.subject_placeholder')}
                                     value={formData.subject}
                                     onChange={e => setFormData({ ...formData, subject: e.target.value })}
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Message</label>
+                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t('contact.message_label')}</label>
                                 <textarea
                                     required
                                     rows="5"
                                     className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
-                                    placeholder="How can I help you?"
+                                    placeholder={t('contact.message_placeholder')}
                                     value={formData.message}
                                     onChange={e => setFormData({ ...formData, message: e.target.value })}
                                 ></textarea>
@@ -140,20 +142,20 @@ const ContactSection = () => {
                                 className="w-full group flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-primary hover:bg-primary-dark rounded-xl shadow-lg hover:shadow-primary/30 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
                             >
                                 {status === 'loading' ? (
-                                    <><Loader size={20} className="mr-2 animate-spin" /> Sending...</>
+                                    <><Loader size={20} className="mr-2 animate-spin" /> {t('contact.sending')}</>
                                 ) : (
-                                    <><Send size={20} className="mr-2 group-hover:translate-x-1 transition-transform" /> Send Message</>
+                                    <><Send size={20} className="mr-2 group-hover:translate-x-1 transition-transform" /> {t('contact.send')}</>
                                 )}
                             </button>
 
                             {status === 'success' && (
                                 <div className="flex items-center gap-2 text-green-500 justify-center font-medium text-sm">
-                                    <CheckCircle size={18} /> Message sent! I'll get back to you soon.
+                                    <CheckCircle size={18} /> {t('contact.success')}
                                 </div>
                             )}
                             {status === 'error' && (
                                 <div className="flex items-center gap-2 text-red-500 justify-center font-medium text-sm">
-                                    <AlertCircle size={18} /> Failed to send. Please try again or email directly.
+                                    <AlertCircle size={18} /> {t('contact.error')}
                                 </div>
                             )}
                         </form>

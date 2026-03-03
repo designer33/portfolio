@@ -1,47 +1,50 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const skillCategories = [
-    {
-        title: "Frontend",
-        skills: [
-            { name: "HTML5", level: 95 },
-            { name: "CSS3 / Tailwind", level: 90 },
-            { name: "JavaScript", level: 85 },
-            { name: "React", level: 80 },
-            { name: "Angular", level: 75 },
-            { name: "Shopify Liquid", level: 85 },
-        ]
-    },
-    {
-        title: "CMS & E-Commerce",
-        skills: [
-            { name: "WordPress", level: 95 },
-            { name: "WooCommerce", level: 90 },
-            { name: "Shopify", level: 85 },
-        ]
-    },
-    {
-        title: "Design",
-        skills: [
-            { name: "UI/UX Design", level: 85 },
-            { name: "Figma", level: 90 },
-            { name: "Adobe Illustrator", level: 75 },
-            { name: "Wireframing", level: 85 },
-        ]
-    },
-    {
-        title: "Tools & Others",
-        skills: [
-            { name: "Git & GitHub", level: 85 },
-            { name: "Browser Dev Tools", level: 95 },
-            { name: "Responsive Design", level: 95 },
-            { name: "Cross-Browser Testing", level: 90 },
-        ]
-    }
-];
+import { useTranslation } from 'react-i18next';
 
 const SkillsSection = () => {
+    const { t } = useTranslation();
+
+    const skillCategories = [
+        {
+            title: t('skills.cat1'),
+            skills: [
+                { name: "HTML5", level: 95 },
+                { name: "CSS3 / Tailwind", level: 90 },
+                { name: "JavaScript", level: 85 },
+                { name: "React", level: 80 },
+                { name: "Angular", level: 75 },
+                { name: "Shopify Liquid", level: 85 },
+            ]
+        },
+        {
+            title: t('skills.cat2'),
+            skills: [
+                { name: "WordPress", level: 95 },
+                { name: "WooCommerce", level: 90 },
+                { name: "Shopify", level: 85 },
+            ]
+        },
+        {
+            title: t('skills.cat3'),
+            skills: [
+                { name: "UI/UX Design", level: 85 },
+                { name: "Figma", level: 90 },
+                { name: "Adobe Illustrator", level: 75 },
+                { name: "Wireframing", level: 85 },
+            ]
+        },
+        {
+            title: t('skills.cat4'),
+            skills: [
+                { name: "Git & GitHub", level: 85 },
+                { name: "Browser Dev Tools", level: 95 },
+                { name: "Responsive Design", level: 95 },
+                { name: "Cross-Browser Testing", level: 90 },
+            ]
+        }
+    ];
+
     return (
         <section id="skills" className="py-20 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,10 +55,10 @@ const SkillsSection = () => {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-bold mb-4"
                     >
-                        My <span className="text-gradient">Skills</span>
+                        {t('skills.title')} <span className="text-gradient">{t('skills.subtitle')}</span>
                     </motion.h2>
                     <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                        Tools, technologies, and practices I use to build performant web applications.
+                        {t('skills.description')}
                     </p>
                 </div>
 

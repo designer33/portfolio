@@ -1,19 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase } from 'lucide-react';
-
-const experiences = [
-    { role: "Web Designer", company: "DevioTech", period: "Apr 2024 – Present", desc: "Leading the design system and front-end architecture for enterprise clients." },
-    { role: "Shopify & WordPress Developer", company: "Twisted Minds", period: "2023 – 2024", desc: "Developed highly customized e-commerce solutions increasing client sales by 40%." },
-    { role: "Angular Developer", company: "Magnatec Systems", period: "2021 – 2023", desc: "Built scalable enterprise dashboards and interactive single-page applications." },
-    { role: "Front End Developer", company: "Smart Insider", period: "2020 – 2021", desc: "Implemented responsive UI/UX designs and complex data visualizations." },
-    { role: "WordPress Developer", company: "Celeste Miranda & Associates", period: "2019 – 2020", desc: "Custom theme development and performance optimization for publisher platforms." },
-    { role: "Senior Frontend Developer", company: "Purch", period: "2016 – 2018", desc: "Spearheaded the front-end modernization of high-traffic content sites." },
-    { role: "Front End Developer", company: "Cancer IQ", period: "2014 – 2016", desc: "Developed secure and accessible healthcare interfaces." },
-    { role: "Front End Developer", company: "FretBay", period: "2012 – 2014", desc: "Started career building dynamic web platforms for logistics." },
-];
+import { useTranslation } from 'react-i18next';
 
 const ExperienceTimeline = () => {
+    const { t } = useTranslation();
+
+    const experiences = [
+        { role: t('experience.exp1_role'), company: t('experience.exp1_company'), period: "Apr 2024 – Present", desc: t('experience.exp1_desc') },
+        { role: t('experience.exp2_role'), company: t('experience.exp2_company'), period: "2023 – 2024", desc: t('experience.exp2_desc') },
+        { role: t('experience.exp3_role'), company: t('experience.exp3_company'), period: "2021 – 2023", desc: t('experience.exp3_desc') },
+        { role: t('experience.exp4_role'), company: t('experience.exp4_company'), period: "2020 – 2021", desc: t('experience.exp4_desc') },
+        { role: t('experience.exp5_role'), company: t('experience.exp5_company'), period: "2019 – 2020", desc: t('experience.exp5_desc') },
+        { role: t('experience.exp6_role'), company: t('experience.exp6_company'), period: "2016 – 2018", desc: t('experience.exp6_desc') },
+        { role: t('experience.exp7_role'), company: t('experience.exp7_company'), period: "2014 – 2016", desc: t('experience.exp7_desc') },
+        { role: t('experience.exp8_role'), company: t('experience.exp8_company'), period: "2012 – 2014", desc: t('experience.exp8_desc') },
+    ];
+
     return (
         <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +27,7 @@ const ExperienceTimeline = () => {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-bold mb-4"
                     >
-                        My <span className="text-gradient">Experience</span>
+                        {t('experience.title')} <span className="text-gradient">{t('experience.subtitle')}</span>
                     </motion.h2>
                 </div>
 

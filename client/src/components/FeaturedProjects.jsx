@@ -1,32 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-const featuredProjects = [
-    {
-        id: 1,
-        title: "E-Commerce Replatforming",
-        description: "Migrated a legacy e-commerce site to Shopify, increasing conversion rates by 40% and improving page load speeds.",
-        image: "https://images.unsplash.com/photo-1661956602116-aa6865609028?auto=format&fit=crop&q=80&w=800",
-        techStack: ["Shopify", "Liquid", "JavaScript", "Tailwind CSS"],
-        category: "Shopify",
-        liveDemoLink: "#",
-        githubLink: "#",
-    },
-    {
-        id: 2,
-        title: "Real Estate Portal",
-        description: "Developed a comprehensive Angular-based real estate portal with advanced property filtering and map integration.",
-        image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800",
-        techStack: ["Angular", "TypeScript", "RxJS", "SCSS"],
-        category: "Angular",
-        liveDemoLink: "#",
-        githubLink: "#",
-    }
-];
+import { ExternalLink, Github } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const FeaturedProjects = () => {
+    const { t } = useTranslation();
+
+    const featuredProjects = [
+        {
+            id: 1,
+            title: t('featured.p1_title'),
+            description: t('featured.p1_desc'),
+            image: "https://images.unsplash.com/photo-1661956602116-aa6865609028?auto=format&fit=crop&q=80&w=800",
+            techStack: ["Shopify", "Liquid", "JavaScript", "Tailwind CSS"],
+            category: "Shopify",
+            liveDemoLink: "#",
+            githubLink: "#",
+        },
+        {
+            id: 2,
+            title: t('featured.p2_title'),
+            description: t('featured.p2_desc'),
+            image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800",
+            techStack: ["Angular", "TypeScript", "RxJS", "SCSS"],
+            category: "Angular",
+            liveDemoLink: "#",
+            githubLink: "#",
+        }
+    ];
+
     return (
         <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,10 +40,10 @@ const FeaturedProjects = () => {
                             viewport={{ once: true }}
                             className="text-3xl md:text-5xl font-bold mb-4"
                         >
-                            Featured <span className="text-gradient">Projects</span>
+                            {t('featured.title')} <span className="text-gradient">{t('featured.subtitle')}</span>
                         </motion.h2>
                         <p className="text-slate-600 dark:text-slate-400 max-w-2xl">
-                            Some of my best work that showcases my technical skills and design aesthetics.
+                            {t('featured.description')}
                         </p>
                     </div>
                 </div>
@@ -54,7 +56,7 @@ const FeaturedProjects = () => {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.4, delay: index * 0.2 }}
-                            className="glass rounded-2xl overflow-hidden group flex flex-col h-full transform hover:-translate-y-2 transition-all duration-300"
+                            className="glass rounded-2xl overflow-hidden group hover:-translate-y-2 transition-all duration-300 flex flex-col h-full"
                         >
                             <div className="relative h-72 overflow-hidden">
                                 <img
@@ -64,12 +66,16 @@ const FeaturedProjects = () => {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                                     <div className="flex gap-4 w-full justify-end">
-                                        <a href={project.liveDemoLink} className="p-3 bg-primary text-white rounded-full hover:bg-primary-dark hover:scale-110 transition-all shadow-lg">
-                                            <ExternalLink size={20} />
-                                        </a>
-                                        <a href={project.githubLink} className="p-3 bg-white text-slate-900 rounded-full hover:bg-slate-200 hover:scale-110 transition-all shadow-lg">
-                                            <Github size={20} />
-                                        </a>
+                                        {project.liveDemoLink !== "#" && (
+                                            <a href={project.liveDemoLink} className="p-3 bg-primary text-white rounded-full hover:bg-primary-dark hover:scale-110 transition-all shadow-lg">
+                                                <ExternalLink size={20} />
+                                            </a>
+                                        )}
+                                        {project.githubLink !== "#" && (
+                                            <a href={project.githubLink} className="p-3 bg-white text-slate-900 rounded-full hover:bg-slate-200 hover:scale-110 transition-all shadow-lg">
+                                                <Github size={20} />
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -91,10 +97,6 @@ const FeaturedProjects = () => {
                             </div>
                         </motion.div>
                     ))}
-                </div>
-
-                <div className="mt-12 text-center md:hidden">
-                    {/* Replaced View All Projects, since we are a Single Page Application now */}
                 </div>
             </div>
         </section>
