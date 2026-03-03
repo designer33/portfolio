@@ -1,42 +1,43 @@
 const express = require('express');
 const multer = require('multer');
-const path = require('path');
+const { uploadToCloudinary } = require('../utils/cloudinary');
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../uploads'));
-    },
-    filename: (req, file, cb) => {
-        const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${path.extname(file.originalname)}`;
-        cb(null, uniqueName);
-    }
-});
+// Use memory storage for Cloudinary upload
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|gif|webp/;
-    const ext = allowed.test(path.extname(file.originalname).toLowerCase());
-    const mime = allowed.test(file.mimetype);
-    if (ext && mime) {
+    if (file.mimetype.startsWith('image/')) {
         cb(null, true);
     } else {
-        cb(new Error('Only image files are allowed (JPEG, PNG, GIF, WebP)'));
+        cb(new Error('Only images are allowed (JPG, PNG, GIF, WebP)'), false);
     }
 };
 
 const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
-    fileFilter
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    fileFilter,
 });
 
 // POST /api/upload — handle single image upload
-router.post('/', upload.single('image'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ message: 'No file uploaded' });
+router.post('/', upload.single('image'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+
+        // Upload to Cloudinary
+        const imageUrl = await uploadToCloudinary(req.file.buffer);
+
+        res.status(201).json({
+            message: 'Upload successful',
+            url: imageUrl
+        });
+    } catch (error) {
+        console.error('Cloudinary upload error:', error);
+        res.status(500).json({ message: 'Upload failed', error: error.message });
     }
-    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-    res.status(201).json({ url: imageUrl, filename: req.file.filename });
 });
 
 module.exports = router;

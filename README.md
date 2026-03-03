@@ -1,79 +1,31 @@
-# Irfan Rashid — Full Stack Portfolio
+# Portfolio Deployment Guide
 
-A modern, single-page developer portfolio built with the MERN stack.
+Follow these steps to deploy your portfolio live on Vercel.
 
-## 🚀 Tech Stack
+## 1. Database (MongoDB Atlas)
+1.  Create a free account at [mongodb.com](https://www.mongodb.com/cloud/atlas).
+2.  Create a new Cluster (Shared/Free).
+3.  Under **Network Access**, add `0.0.0.0/0` (Allow access from anywhere).
+4.  Under **Database Access**, create a user with a password.
+5.  Get your **Connection String** (choose "Drivers", then Node.js). It should look like:
+    `mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/portfolio?retryWrites=true&w=majority`
 
-**Frontend**: React, Vite, Tailwind CSS v3, Framer Motion, Axios  
-**Backend**: Node.js, Express.js, MongoDB (Mongoose), JWT, Helmet, express-rate-limit
+## 2. Image Storage (Cloudinary)
+1.  Create a free account at [cloudinary.com](https://cloudinary.com/).
+2.  Go to your **Dashboard**.
+3.  Copy your **Cloud Name**, **API Key**, and **API Secret**.
 
----
+## 3. Deployment (Vercel)
+1.  Go to [vercel.com](https://vercel.com/) and import your GitHub repository.
+2.  **Environment Variables**: In the Vercel project settings, add the following variables:
+    - `MONGODB_URI`: Your Atlas connection string.
+    - `JWT_SECRET`: Any random long string.
+    - `CLOUDINARY_CLOUD_NAME`: From Cloudinary.
+    - `CLOUDINARY_API_KEY`: From Cloudinary.
+    - `CLOUDINARY_API_SECRET`: From Cloudinary.
+    - `NODE_ENV`: `production`
+3.  Click **Deploy**.
 
-## 📂 Project Structure
-
-```
-portfolio/
-├── client/         # React frontend (Vite)
-└── server/         # Express.js backend API
-```
-
----
-
-## 🛠️ Local Development
-
-### 1. Backend Setup
-
-```bash
-cd server
-cp .env.example .env   # Fill in your MongoDB URI and JWT secret
-npm install
-node server.js         # Runs on http://localhost:5000
-```
-
-### 2. Frontend Setup
-
-```bash
-cd client
-cp .env.example .env   # Set VITE_API_URL=http://localhost:5000/api
-npm install
-npm run dev            # Runs on http://localhost:5173
-```
-
-### Admin Panel
-
-Visit `http://localhost:5173/admin/login`  
-Default credentials (without DB): `admin@irfan.com` / `admin123`
-
----
-
-## 🌐 Deployment
-
-### Frontend → Vercel
-
-1. Push `client/` to GitHub
-2. Import the repo in [Vercel](https://vercel.com)
-3. Set **Root Directory** to `client`
-4. Set env var: `VITE_API_URL=https://your-api.onrender.com/api`
-5. Deploy — `vercel.json` handles SPA routing automatically
-
-### Backend → Render
-
-1. Push `server/` to GitHub (or use a monorepo)
-2. Create a new **Web Service** on [Render](https://render.com)
-3. Set **Build Command**: `npm install`
-4. Set **Start Command**: `node server.js`
-5. Add environment variables from `.env.example`
-6. Deploy
-
----
-
-## 🔑 API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/login` | Admin login |
-| GET | `/api/projects` | Get all projects |
-| POST | `/api/projects` | Create project (admin) |
-| GET | `/api/blog` | Get all blog posts |
-| POST | `/api/messages` | Submit contact form |
-| GET | `/api/messages` | Get all messages (admin) |
+## 4. Post-Deployment
+- Your site will be live at `https://your-project.vercel.app`.
+- To create your admin account on the live site, ensure you have one user in your Atlas database (you can manually add it via the Atlas UI for the first time).
