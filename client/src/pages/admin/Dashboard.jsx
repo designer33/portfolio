@@ -250,7 +250,10 @@ const ProjectsTab = () => {
 
     const fetchProjects = useCallback(async () => {
         setLoading(true);
-        try { const { data } = await api.get('/projects'); setProjects(data); }
+        try {
+            const { data } = await api.get('/projects');
+            setProjects(Array.isArray(data) ? data : []);
+        }
         catch { } finally { setLoading(false); }
     }, []);
 
@@ -482,7 +485,12 @@ const Dashboard = () => {
 
         // Fetch stats for Overview
         Promise.all([api.get('/projects'), api.get('/blog'), api.get('/messages')])
-            .then(([p, b, m]) => setStats({ projects: p.data.length, blog: b.data.length, messages: m.data.length }))
+            .then(([p, b, m]) => {
+                const projectsCount = Array.isArray(p.data) ? p.data.length : 0;
+                const blogCount = Array.isArray(b.data) ? b.data.length : 0;
+                const messagesCount = Array.isArray(m.data) ? m.data.length : 0;
+                setStats({ projects: projectsCount, blog: blogCount, messages: messagesCount });
+            })
             .catch(() => { });
     }, [navigate]);
 
