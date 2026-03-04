@@ -41,7 +41,7 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-8 items-center">
-                        {navLinks.map((link) => (
+                        {Array.isArray(navLinks) ? navLinks.map((link) => (
                             <a
                                 key={link.id}
                                 href={`#${link.id}`}
@@ -50,7 +50,7 @@ const Navbar = () => {
                             >
                                 {link.name}
                             </a>
-                        ))}
+                        )) : null}
                         <button onClick={toggleLanguage} className="p-2 flex items-center gap-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-sm font-medium">
                             <Globe size={18} />
                             <span className="uppercase">{i18n.language}</span>
@@ -82,7 +82,7 @@ const Navbar = () => {
             {isMenuOpen && (
                 <div className="md:hidden absolute top-16 left-0 w-full glass shadow-xl border-t border-slate-200/20">
                     <div className="px-4 py-4 flex flex-col space-y-4">
-                        {navLinks.map((link) => (
+                        {Array.isArray(navLinks) ? navLinks.map((link) => (
                             <a
                                 key={link.id}
                                 href={`#${link.id}`}
@@ -91,7 +91,7 @@ const Navbar = () => {
                             >
                                 {link.name}
                             </a>
-                        ))}
+                        )) : null}
                     </div>
                 </div>
             )}

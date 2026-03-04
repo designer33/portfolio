@@ -57,7 +57,7 @@ const Projects = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-wrap justify-center gap-4 mb-12"
             >
-                {categories.map((cat, index) => (
+                {Array.isArray(categories) ? categories.map((cat, index) => (
                     <button
                         key={index}
                         onClick={() => setActiveCategory(cat)}
@@ -68,7 +68,7 @@ const Projects = () => {
                     >
                         {cat}
                     </button>
-                ))}
+                )) : null}
             </motion.div>
 
             {/* Projects Grid */}
@@ -94,7 +94,7 @@ const Projects = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {filteredProjects.map((project, index) => (
+                    {Array.isArray(filteredProjects) ? filteredProjects.map((project, index) => (
                         <motion.div
                             key={project._id || index}
                             initial={{ opacity: 0, scale: 0.9 }}
@@ -130,15 +130,15 @@ const Projects = () => {
                                 </p>
 
                                 <div className="flex flex-wrap gap-2 mt-auto">
-                                    {project.techStack?.map((tech, i) => (
+                                    {Array.isArray(project.techStack) ? project.techStack.map((tech, i) => (
                                         <span key={i} className="px-3 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg">
                                             {tech}
                                         </span>
-                                    ))}
+                                    )) : null}
                                 </div>
                             </div>
                         </motion.div>
-                    ))}
+                    )) : null}
                 </div>
             )}
         </div>

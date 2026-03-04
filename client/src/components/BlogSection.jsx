@@ -67,8 +67,8 @@ const BlogSection = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {posts.map((post, index) => {
-                            const postTag = post.tags?.[0] || 'General';
+                        {Array.isArray(posts) ? posts.map((post, index) => {
+                            const postTag = Array.isArray(post.tags) ? post.tags[0] : 'General';
                             const readTime = Math.ceil((post.content?.split(' ').length || 0) / 200);
 
                             return (
@@ -120,7 +120,7 @@ const BlogSection = () => {
                                     </div>
                                 </motion.article>
                             );
-                        })}
+                        }) : null}
                     </div>
                 )}
             </div>

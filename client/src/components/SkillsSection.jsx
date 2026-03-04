@@ -63,7 +63,7 @@ const SkillsSection = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {skillCategories.map((category, catIndex) => (
+                    {Array.isArray(skillCategories) ? skillCategories.map((category, catIndex) => (
                         <motion.div
                             key={catIndex}
                             initial={{ opacity: 0, y: 20 }}
@@ -76,7 +76,7 @@ const SkillsSection = () => {
                                 {category.title}
                             </h3>
                             <div className="space-y-6">
-                                {category.skills.map((skill, index) => (
+                                {Array.isArray(category.skills) ? category.skills.map((skill, index) => (
                                     <div key={index}>
                                         <div className="flex justify-between mb-1">
                                             <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{skill.name}</span>
@@ -92,10 +92,10 @@ const SkillsSection = () => {
                                             ></motion.div>
                                         </div>
                                     </div>
-                                ))}
+                                )) : null}
                             </div>
                         </motion.div>
-                    ))}
+                    )) : null}
                 </div>
             </div>
         </section>

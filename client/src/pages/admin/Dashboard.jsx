@@ -18,9 +18,9 @@ const OverviewTab = ({ stats }) => (
         ].map((s, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
                 className="glass p-6 rounded-2xl flex items-center gap-4">
-                <div className={`${s.color} p-3 rounded-xl text-white`}>{s.icon}</div>
+                <div className={`${s.color || 'bg-slate-500'} p-3 rounded-xl text-white`}>{s.icon}</div>
                 <div>
-                    <p className="text-3xl font-extrabold">{s.value}</p>
+                    <p className="text-3xl font-extrabold">{s.value || 0}</p>
                     <p className="text-slate-500 dark:text-slate-400 text-sm">{s.label}</p>
                 </div>
             </motion.div>
@@ -147,7 +147,7 @@ const AddProjectModal = ({ onClose, onSave }) => {
                         <label className="text-sm font-medium text-slate-700 dark:text-slate-300 block mb-1">Category</label>
                         <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}
                             className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white/50 dark:bg-slate-900/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
-                            {categories.map(c => <option key={c}>{c}</option>)}
+                            {Array.isArray(categories) ? categories.map(c => <option key={c}>{c}</option>) : null}
                         </select>
                     </div>
                 </div>
@@ -299,7 +299,7 @@ const ProjectsTab = () => {
                                 <h4 className="font-bold text-lg mt-1 mb-2">{p.title}</h4>
                                 <p className="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-2">{p.description}</p>
                                 <div className="flex flex-wrap gap-1.5 mb-4">
-                                    {p.techStack?.map((t, i) => <span key={i} className="text-xs px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded-md">{t}</span>)}
+                                    {Array.isArray(p.techStack) ? p.techStack.map((t, i) => <span key={i} className="text-xs px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded-md">{t}</span>) : null}
                                 </div>
                                 <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
                                     <div className="flex gap-3">
@@ -351,12 +351,12 @@ const MessagesTab = () => {
             {/* Message List */}
             <div className="space-y-3">
                 <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">{messages.length} message{messages.length !== 1 ? 's' : ''}</p>
-                {messages.length === 0 ? (
+                {Array.isArray(messages) && messages.length === 0 ? (
                     <div className="glass rounded-2xl p-12 text-center text-slate-500">
                         <MessageSquare size={40} className="mx-auto mb-3 opacity-30" />
                         <p>No messages yet.</p>
                     </div>
-                ) : messages.map(m => (
+                ) : Array.isArray(messages) ? messages.map(m => (
                     <motion.div key={m._id} layout onClick={() => setSelected(m)}
                         className={`glass p-4 rounded-xl cursor-pointer transition-all border-2 ${selected?._id === m._id ? 'border-primary' : 'border-transparent hover:border-primary/30'}`}>
                         <div className="flex justify-between items-start mb-1">
@@ -367,7 +367,7 @@ const MessagesTab = () => {
                         <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{m.subject}</p>
                         <p className="text-xs text-slate-500 mt-1 line-clamp-1">{m.message}</p>
                     </motion.div>
-                ))}
+                )) : null}
             </div>
 
             {/* Message Detail */}
@@ -441,12 +441,12 @@ const BlogTab = () => {
                     <Plus size={18} /> Add Post
                 </button>
             </div>
-            {posts.length === 0 ? (
+            {Array.isArray(posts) && posts.length === 0 ? (
                 <div className="glass rounded-2xl p-16 text-center text-slate-500">
                     <FileText size={48} className="mx-auto mb-4 opacity-30" />
                     <p className="font-medium">No blog posts yet.</p>
                 </div>
-            ) : posts.map(p => (
+            ) : Array.isArray(posts) ? posts.map(p => (
                 <div key={p._id} className="glass p-5 rounded-2xl mb-4 flex justify-between items-center group">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-lg bg-slate-100 overflow-hidden">
@@ -467,7 +467,7 @@ const BlogTab = () => {
                         {deletingId === p._id ? <Loader size={16} className="animate-spin" /> : <Trash2 size={16} />}
                     </button>
                 </div>
-            ))}
+            )) : null}
             <AnimatePresence>{showModal && <AddBlogModal onClose={() => setShowModal(false)} onSave={handleAdd} />}</AnimatePresence>
         </div>
     );
@@ -529,7 +529,7 @@ const Dashboard = () => {
                 </div>
 
                 <nav className="flex-1 px-4 space-y-1.5 mt-4 overflow-y-auto">
-                    {tabs.map((tab) => (
+                    {Array.isArray(tabs) ? tabs.map((tab) => (
                         <button key={tab.name} onClick={() => setActiveTab(tab.name)}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${activeTab === tab.name
                                 ? 'bg-primary text-white shadow-md shadow-primary/20'
@@ -540,7 +540,7 @@ const Dashboard = () => {
                                 <span className="ml-auto bg-white/20 text-white text-xs px-2 py-0.5 rounded-full">{stats.messages}</span>
                             )}
                         </button>
-                    ))}
+                    )) : null}
                 </nav>
 
                 <div className="p-4 border-t border-slate-200 dark:border-slate-700">

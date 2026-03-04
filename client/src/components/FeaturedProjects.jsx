@@ -49,7 +49,7 @@ const FeaturedProjects = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {featuredProjects.map((project, index) => (
+                    {Array.isArray(featuredProjects) ? featuredProjects.map((project, index) => (
                         <motion.div
                             key={project.id}
                             initial={{ opacity: 0, scale: 0.95 }}
@@ -88,15 +88,15 @@ const FeaturedProjects = () => {
                                 </p>
 
                                 <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-slate-200 dark:border-slate-700">
-                                    {project.techStack.map((tech, i) => (
+                                    {Array.isArray(project.techStack) ? project.techStack.map((tech, i) => (
                                         <span key={i} className="px-3 py-1.5 text-xs font-medium bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-lg shadow-sm border border-slate-200/50 dark:border-slate-700/50">
                                             {tech}
                                         </span>
-                                    ))}
+                                    )) : null}
                                 </div>
                             </div>
                         </motion.div>
-                    ))}
+                    )) : null}
                 </div>
             </div>
         </section>

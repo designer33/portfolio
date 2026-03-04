@@ -36,7 +36,7 @@ const ExperienceTimeline = () => {
                     <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-0.5 h-full bg-primary/30 z-0"></div>
 
                     <div className="space-y-12">
-                        {experiences.map((exp, index) => (
+                        {Array.isArray(experiences) ? experiences.map((exp, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}
@@ -67,7 +67,7 @@ const ExperienceTimeline = () => {
                                     </div>
                                 </div>
                             </motion.div>
-                        ))}
+                        )) : null}
                     </div>
                 </div>
             </div>
